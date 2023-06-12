@@ -4,5 +4,6 @@ from authentication.views import *
 
 urlpatterns = [
     path('login/', login, name='login'),
+    path('register/', login, name='register'),
 ]
 
