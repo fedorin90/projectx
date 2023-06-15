@@ -23,10 +23,18 @@
 
         <div class="filters" data-aos="fade-up" data-aos-delay="100">
           <ul>
-            <li class="active" >All</li>
+              {% if cat_selected %}
+              <li><a href="{% url 'core:promotions' %}">All</a></li>
+              {% else %}
+			  <li class="active"><a href="{% url 'core:promotions' %}"></a>All</li>
+              {% endif %}
 			  {% for cat in promotion_categories %}
-            <li><a href="#" ></a>{{ cat.name }}</li>
-			  			{% endfor %}
+              {% if cat.slug == cat_selected %}
+			  <li class="active">{{cat.name}}</li>
+              {% else %}
+			  <li ><a href="{% url 'core:promotion_category' cat.slug %}">{{cat.name}}</a></li>
+              {% endif %}
+			  {% endfor %}
           </ul>
         </div>
 	  </div>
@@ -35,22 +43,22 @@
       <div class="container">
         <div class="row gutter-v1 align-items-stretch mb-5">
           <div class="col-12">
-            <h2 class="section-title">Category name</h2>
+            <h2 class="section-title">{{cat.name}}</h2>
           </div>
-				{% for promotion in promotion %}
+				{% for pr in promotion %}
 
-              <div class="col-12">
-                <div class="post-entry horizontal d-flex mb-0">
+              <div class="col-md-6 col-lg-6">
+                <div class="post-entry">
                   <div class="media">
-                    <a href="#"><img src="{{ promotion.image }}" alt="Image" class="img-fluid"></a>
+                    <a href="{{ pr.get_absolute_url }}"><img src="{{ pr.image }}" alt="Image" class="img-fluid"></a>
                   </div>
                   <div class="text">
-                    <div class="meta-cat"><a href="#">{{ promotion.category}}</a></div>
-                    <h2><a href="#">{{ promotion.name }}</a></h2>
+                    <div class="meta-cat"><a href="{% url 'core:promotion_category' pr.category %}">{{ pr.category}}</a></div>
+                    <h2><a href="{{ pr.get_absolute_url }}">{{ pr.name }}</a></h2>
                     <div class="meta mb-0">
-                      <span>{{ promotion.create }}</span>
+                      <span>{{ pr.create }}</span>
                     </div>
-                    <p>{{ promotion.description }}</p>
+                    <p>{{pr.description|linebreaks|truncatewords:20}}</p>
 
                   </div>
                 </div>
