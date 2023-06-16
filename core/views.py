@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+
+from .forms import ContactForm
 from .models import Promotion, PromotionCategory, PromotionImage
 
 
@@ -40,7 +42,19 @@ def promotion_detail(request, slug):
 
 
 def contact(request):
-    return render(request, 'core/contact.html', {'title': 'Contact'})
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+#add sending data
+    else:
+        form = ContactForm()
+
+    context = {
+        'title': 'Contact',
+        'form': form,
+    }
+    return render(request, 'core/contact.html', context=context)
 
 
 def about(request):
