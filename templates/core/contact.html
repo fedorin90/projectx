@@ -36,7 +36,7 @@
                       </svg>
                     </div> <!-- /.icon -->
                     <div class="service-contents">
-                      <p>43 Raymouth Rd. Baltemoer, London 3910</p>
+                      <p>Ukraine (UA), Dnipropetrovsk oblast, Novomoskovsk 51200</p>
                     </div> <!-- /.service-contents-->
                   </div> <!-- /.service -->
                 </div>
@@ -49,7 +49,7 @@
                       </svg>
                     </div> <!-- /.icon -->
                     <div class="service-contents">
-                      <p>info@yourdomain.com</p>
+                      <p>fedorin.mir@gmail.com</p>
                     </div> <!-- /.service-contents-->
                   </div> <!-- /.service -->
                 </div>
@@ -62,7 +62,7 @@
                       </svg>
                     </div> <!-- /.icon -->
                     <div class="service-contents">
-                      <p>+1 294 3925 3939</p>
+                      <p>+38099******3</p>
                     </div> <!-- /.service-contents-->
                   </div> <!-- /.service -->
                 </div>
@@ -70,28 +70,29 @@
 
               <form action="{% url 'core:contact' %}" method="post">
 				   {% csrf_token %}
+				  <span style="color: red" class="form-error"> {{ form.non_field_errors}}</span>
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
 						<p><label class="text-black" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}:</label>{{ form.first_name }}</p>
-						<span style="color: red" class="form-error"> {{ f.errors }}</span>
+						<span style="color: red" class="form-error"> {{ form.first_name.errors }}</span>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <p><label class="text-black" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}:</label>{{ form.last_name }}</p>
-						<span style="color: red" class="form-error"> {{ f.errors }}</span>
+						<span style="color: red" class="form-error"> {{ form.last_name.errors }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <p><label class="text-black" for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>{{ form.email }}</p>
-					<span style="color: red" class="form-error"> {{ f.errors }}</span>
+					<span style="color: red" class="form-error"> {{ form.email.errors }}</span>
                 </div>
 
                 <div class="form-group">
                   <p><label class="text-black" for="{{ form.message.id_for_label }}">{{ form.message.label }}:</label>{{ form.message }}</p>
-					<span style="color: red" class="form-error"> {{ f.errors }}</span>
+					<span style="color: red" class="form-error"> {{ form.message.errors }}</span>
                 </div>
 
                 <button type="submit" class="btn btn-primary-hover-outline">Send Message</button>

@@ -18,9 +18,10 @@ class Promotion(models.Model):
     name = models.CharField(max_length=200, db_index=True, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField(blank=True)
-    image = models.FileField(blank=True)
+    image = models.FileField(upload_to="photos/%Y/%m/%d/", blank=True)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True)
 
     def get_absolute_url(self):
         return reverse('core:promotion_detail', args=[self.slug])

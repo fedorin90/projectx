@@ -50,7 +50,9 @@
               <div class="col-md-6 col-lg-6">
                 <div class="post-entry">
                   <div class="media">
-                    <a href="{{ pr.get_absolute_url }}"><img src="{{ pr.image }}" alt="Image" class="img-fluid"></a>
+                      {% if pr.image %}
+                    <a href="{{ pr.get_absolute_url }}"><img src="{{ pr.image.url }}" alt="Image" class="img-fluid"></a>
+                      {% endif %}
                   </div>
                   <div class="text">
                     <div class="meta-cat"><a href="{% url 'core:promotion_category' pr.category %}">{{ pr.category}}</a></div>
