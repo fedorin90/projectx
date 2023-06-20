@@ -7,7 +7,47 @@
 {% endblock title %}
 
 {% block content %}
-<h3>Home page</h3>
+        <!-- Promotion -->
+    <div class="container mb-5">
+          <div class="col-12">
+            <h2 class="section-title">Promotion</h2>
+          </div>
+      <div class="main-slider owl-single owl-carousel">
+        {% for prom in promotion %}
+        <div class="huge-article d-md-flex">
+          <div class="img-wrap">
+            {% if prom.image %}
+            <a href="{{ prom.get_absolute_url }}"><img src="{{prom.image.url}}" alt="Image" class="img-fluid"></a>
+            {% endif %}
+          </div>
+          <div class="text-wrap">
+            <div class="meta-cat"><a href="{% url 'core:promotion_category' prom.category.name %}">{{ prom.category.name}}</a></div>
+            <h3><a href="{{ prom.get_absolute_url }}">{{prom.name}}</a></h3>
+            <div class="meta mb-0">
+              <span>{{ prom.create }}</span>
+            </div>
+            <p>{{prom.description|linebreaks|truncatewords:20}}</p>
+          </div>
+        </div>
+        {%endfor%}
+        <!-- Promotion -->
+
+      </div>
+    </div>
+      <!-- products -->
+    <div class="container mb-5">
+          <div class="col-12">
+            <h2 class="section-title">Products</h2>
+          </div>
+    </div>
+      <!-- products -->
+      <!-- services -->
+    <div class="container mb-5">
+          <div class="col-12">
+            <h2 class="section-title">Services</h2>
+          </div>
+    </div>
+      <!-- services -->
 {% endblock content %}
 
 

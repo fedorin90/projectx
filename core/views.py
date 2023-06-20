@@ -7,17 +7,32 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from .forms import ContactForm
-from .models import Promotion, PromotionCategory, PromotionImage
+from .models import Promotion, PromotionCategory
 
 
-def home(request):
-    return render(request, 'core/home.html', {'title': 'Home page'})
+class HomeView(ListView):
+    model = Promotion
+    template_name = 'core/home.html'
+    context_object_name = 'promotion'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home'
+        context['promotion_categories'] = PromotionCategory.objects.all()
+        return context
+
+    def get_queryset(self):
+        return Promotion.objects.filter(is_published=True).order_by('update')[0:6]
+
+
+# def home(request):
+#     return render(request, 'core/home.html', {'title': 'Home page'})
 
 class PromotionView(ListView):
     model = Promotion
     template_name = 'core/promotions.html'
     context_object_name = 'promotion'
+    paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
