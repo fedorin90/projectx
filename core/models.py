@@ -36,11 +36,11 @@ class Promotion(models.Model):
 #
 #     def __str__(self):
 #         return self.promotion.name
-
+#
 # count = 0
-# for i in range(1000):
+# for i in range(10000):
 #     count += 1
 #     m = Promotion(category_id=random.randint(1, 3), name=f'promotion: {count}', slug=f'promotion{count}', description=f'{"description " * 20}')
-#     m.image.save('Pr.jpg', File(open('/home/fed/Завантаження/Pr.jpg', 'rb')))
+#     m.image.save('Pr.jpg', File(open('/home/fed/Завантаження/pra.jpg', 'rb')))
 #     m.save()
 

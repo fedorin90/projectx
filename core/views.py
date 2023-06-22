@@ -18,7 +18,6 @@ class HomeView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home'
-        context['promotion_categories'] = PromotionCategory.objects.all()
         return context
 
     def get_queryset(self):
@@ -41,7 +40,7 @@ class PromotionView(ListView):
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(is_published=True)
+        return Promotion.objects.filter(is_published=True).order_by('name')
 
 
 # def promotion(request):
@@ -59,17 +58,18 @@ class PromotionCategoryView(ListView):
     model = Promotion
     template_name = 'core/promotions.html'
     context_object_name = 'promotion'
+    paginate_by = 6
     allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Category: ' + str(context['promotion'][0].category)
-        context['promotion_categories'] = PromotionCategory.objects.all()
+        context['promotion_categories'] = PromotionCategory.objects.all().order_by('name')
         context['cat_selected'] = self.kwargs['slug']
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True)
+        return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True).order_by('name')
 
 
 # def promotion_category(request, slug):
@@ -95,7 +95,7 @@ class PromotionDetailView(DetailView):
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(slug=self.kwargs['slug'], is_published=True)
+        return Promotion.objects.filter(slug=self.kwargs['slug'], is_published=True).order_by('name')
 
 
 class ContactView(FormView):

@@ -2,10 +2,39 @@
 {% load static %}
 
 {% block title %}
-	<title>{{ title }}</title>
-
+<title>{{ title }}</title>
 {% endblock title %}
-
 {% block content %}
-<h3>login</h3>
+<div class="site-hero py-5 bg-light mb-0">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-lg-12 text-center">
+            <h1 class="text-black mb-0">{{ title }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container pb-5 mb-5 border-bottom">
+    <div class="row">
+      <div class="col-lg-7">
+        <form method="post">
+          {% csrf_token %}
+            <span style="color: red" class="form-error"> {{ form.non_field_errors }}</span>
+          {% for f in form %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <p><label class="text-black" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+                <span style="color: red" class="form-error"> {{ f.errors }}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary-hover-outline">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
