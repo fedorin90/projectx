@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from core.views import *
 
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
     path('promotions/detail/<slug:slug>/', PromotionDetailView.as_view(), name='promotion_detail'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('about/', about, name='about'),
+
 ]
 

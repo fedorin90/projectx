@@ -132,13 +132,12 @@
               <li><a href="{% url 'core:about' %}">About Us</a></li>
               
               <li><a href="{% url 'core:contact' %}">Contact us</a></li>
-                            <li class="has-children">
-                <a href="#">Authentication</a>
-                <ul class="dropdown">
-                  <li><a href="{% url 'authentication:login' %}">login</a></li>
-                  <li><a href="{% url 'authentication:register' %}">Register</a></li>
-                </ul>
-              </li>
+              {% if request.user.is_authenticated %}
+              <li class="last"><a> {{user.username | upper}}</a> | <a href="{% url 'authentication:logout' %}">Logout</a></li>
+              {% else %}
+              <li class="last"><a href="{% url 'authentication:register' %}">Register</a> | <a href="{% url 'authentication:login' %}">Login</a></li>
+              {% endif %}
+
             </ul>
 
           </div>

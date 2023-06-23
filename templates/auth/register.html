@@ -34,8 +34,8 @@
           {% else %}
           <div class="form-group">
             <label class="control control--checkbox">
-              <span class="caption">i agree website <a href="{% url 'authentication:privacy' %}">{{ f.label }}</a></span>
               {{ f }}
+              <span class="caption"> i agree website <a href="{% url 'authentication:privacy' %}">{{ f.label }}</a></span>
               <div class="control__indicator"></div>
             </label>
           </div>

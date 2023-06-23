@@ -1,9 +1,16 @@
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.views.generic import CreateView
-
+from django.contrib.auth import get_user_model
+from django_email_verification import send_email
+from django.views import View
 from authentication.forms import RegisterUserForm, LoginUserForm
 
 
@@ -18,8 +25,17 @@ class RegisterUserView(CreateView):
         return context
 
     def form_valid(self, form):
-        user = form.save()
-        # login(self.request, user)
+        form.save(commit=False)
+        user_email = form.cleaned_data['email']
+        user_username = form.cleaned_data['username']
+        user_password = form.cleaned_data['password1']
+
+        # Create new user
+        user = User.objects.create_user(username=user_username, email=user_email, password=user_password)
+
+        user.is_active = False
+        send_email(user)
+
         return redirect('authentication:login')
 
 
@@ -38,3 +54,8 @@ class LoginUserView(LoginView):
 
 def privacy(request):
     return render(request, 'auth/privacy.html', {'title': 'Privacy policy and terms of use'})
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('authentication:login')
