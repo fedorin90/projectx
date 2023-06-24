@@ -1,11 +1,32 @@
+{% extends 'base.html' %}
 {% block title %}
-    <title>Email comfirmation</title>
+    <title>Email confirmation</title>
 {% endblock title %}
 
 {% block content %}
-    {% if success %}
-        {{ user.username }}, your account is confirmed!
-    {% else %}
-        Error, invalid token!
-    {% endif %}
+    <div class="site-hero py-5 bg-light mb-5">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-lg-12 text-center">
+            <h1 class="text-black mb-0">Email confirmation</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="container article">
+      <div class="row justify-content-center align-items-stretch">
+
+        <article class="col-lg-8 order-lg-2 px-lg-5">
+          <p>
+              {% if success %}
+              {{ user.username }}, your account is confirmed! Thank you!
+              {% else %}
+              Error, invalid token!
+              {% endif %}
+          </p>
+        </article>
+      </div>
+
+</div>
 {% endblock content %}

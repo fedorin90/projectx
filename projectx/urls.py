@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include(('core.urls', 'core'), namespace='core')),
     path('auth/', include(('authentication.urls', 'authentication'), namespace='authentication')),
     path('email/', include(email_urls), name='email-verification'),
+    path('accounts/', include('allauth.urls')),
 ]
 
 

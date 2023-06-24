@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}
 <title>{{ title }}</title>
 {% endblock title %}
 {% block content %}
+{% load socialaccount %}
 <div class="site-hero py-5 bg-light mb-0">
 
       <div class="container">
@@ -21,6 +21,7 @@
       <div class="col-lg-7">
         <form method="post">
           {% csrf_token %}
+            <a href="{% provider_login_url 'google' %}">Login With Google</a>
             <span style="color: red" class="form-error"> {{ form.non_field_errors }}</span>
           {% for f in form %}
           <div class="row">
