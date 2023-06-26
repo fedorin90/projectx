@@ -21,7 +21,7 @@
             {% endif %}
           </div>
           <div class="text-wrap">
-            <div class="meta-cat"><a href="{% url 'core:promotion_category' prom.category.name %}">{{ prom.category.name}}</a></div>
+            <div class="meta-cat"><a href="{% url 'core:promotion_category' prom.category.slug %}">{{ prom.category.name}}</a></div>
             <h3><a href="{{ prom.get_absolute_url }}">{{prom.name}}</a></h3>
             <div class="meta mb-0">
               <span>{{ prom.create }}</span>

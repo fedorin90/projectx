@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'authentication.apps.AuthenticationConfig',
     'core.apps.CoreConfig',
@@ -178,7 +179,9 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 2
+SITE_ID = 8
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+

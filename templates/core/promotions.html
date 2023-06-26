@@ -55,7 +55,7 @@
                       {% endif %}
                   </div>
                   <div class="text">
-                    <div class="meta-cat"><a href="{% url 'core:promotion_category' pr.category %}">{{ pr.category}}</a></div>
+                    <div class="meta-cat"><a href="{% url 'core:promotion_category' pr.category.slug %}">{{ pr.category}}</a></div>
                     <h2><a href="{{ pr.get_absolute_url }}">{{ pr.name }}</a></h2>
                     <div class="meta mb-0">
                       <span>{{ pr.create }}</span>

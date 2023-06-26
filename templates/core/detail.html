@@ -32,7 +32,7 @@
           <p>{{promotion.description}}</p>
 
           <div class="pt-5 categories_tags ">
-                <p>Categories:  <a href="{% url 'core:promotion_category' promotion.category %}">{{promotion.category}}</a></p>
+                <p>Categories:  <a href="{% url 'core:promotion_category' promotion.category.slug %}">{{promotion.category}}</a></p>
           </div>
 
 

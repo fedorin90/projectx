@@ -1,3 +1,4 @@
+from django.core.files import File
 from django.db import models
 from django.urls import reverse
 
@@ -43,4 +44,4 @@ class Promotion(models.Model):
 #     m = Promotion(category_id=random.randint(1, 3), name=f'promotion: {count}', slug=f'promotion{count}', description=f'{"description " * 20}')
 #     m.image.save('Pr.jpg', File(open('/home/fed/Завантаження/pra.jpg', 'rb')))
 #     m.save()
-
+#
