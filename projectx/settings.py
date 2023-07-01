@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# AUTH_USER_MODEL = 'authentication.User'
+
 ROOT_URLCONF = 'projectx.urls'
 
 TEMPLATES = [
@@ -152,6 +154,9 @@ EMAIL_MAIL_PAGE_TEMPLATE = 'auth/email_confirm.html'
 EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'
 EMAIL_MULTI_USER = True  # optional (defaults to False)
 
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
 # email usage tools gmail in projectx
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -160,11 +165,14 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'fedorin.mir@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
+
 #  allauth settings
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    'allauth.account.auth_backends.AuthenticationBackend',
+
 ]
+
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -179,7 +187,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 8
+SITE_ID = 9
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

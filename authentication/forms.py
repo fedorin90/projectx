@@ -22,7 +22,7 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Login', widget=forms.TextInput(attrs={
+    username = forms.CharField(label='Login or email', widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control"}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
         'type': "password", 'class': "form-control"}))

@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
@@ -108,6 +109,11 @@ class ContactView(FormView):
         context['title'] = 'Contact'
         return context
 
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Message sent successfully!")
+        return HttpResponseRedirect(self.get_success_url())
+
     def form_valid_(self, form):
         # This method is called when valid form data has been POSTed.
         # send message from email
@@ -122,6 +128,8 @@ class ContactView(FormView):
 
         try:
             send_mail(subject, message, 'myr.devel@gmail.com', ['myr.devel@gmail.com'])
+            # messages.add_message(self.request, messages.SUCCESS,
+            #                      "Message sent successfully!")
         except BadHeaderError:
             return HttpResponse('Invalid header found.')
         return super().form_valid(form)

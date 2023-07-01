@@ -5,23 +5,17 @@
 {% endblock title %}
 {% block content %}
 {% load socialaccount %}
-<div class="site-hero py-5 bg-light mb-0">
 
-      <div class="container">
-        <div class="row align-items-center justify-content-between">
-          <div class="col-lg-12 text-center">
-            <h1 class="text-black mb-0">{{ title }}</h1>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="container pb-5 mb-5 border-bottom">
     <div class="row">
+
       <div class="col-lg-7">
+        <a class="btn btn-primary-hover-outline" href="{% provider_login_url 'google' %}" role="button" style="text-transform:none">
+      <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+      Login with Google</a><p>
         <form method="post">
           {% csrf_token %}
-            <a href="{% provider_login_url 'google' %}">Login With Google</a>
             <span style="color: red" class="form-error"> {{ form.non_field_errors }}</span>
           {% for f in form %}
           <div class="row">
