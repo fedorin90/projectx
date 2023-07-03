@@ -28,6 +28,8 @@ class LoginUserForm(AuthenticationForm):
         'type': "password", 'class': "form-control"}))
 
 
+
+
 # class OAuthSingUpForm(BaseSignupForm):
 #     username = forms.CharField(
 #         label=_("Username"),

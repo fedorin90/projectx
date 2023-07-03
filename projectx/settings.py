@@ -152,7 +152,16 @@ EMAIL_MAIL_PLAIN = 'auth/text_email_confirm.txt'
 EMAIL_MAIL_TOKEN_LIFE = 60 * 60
 EMAIL_MAIL_PAGE_TEMPLATE = 'auth/email_confirm.html'
 EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'
-EMAIL_MULTI_USER = True  # optional (defaults to False)
+EMAIL_MULTI_USER = False  # optional (defaults to False)
+
+ACCOUNT_FORMS = {
+    'signup': 'authentication.allauth_forms.MyCustomSignupForm',
+    'login': 'authentication.allauth_forms.MyCustomLoginForm',
+}
+
+SOCIALACCOUNT_FORMS = {
+    'signup': 'authentication.allauth_forms.MySocialSignupForm',
+}
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
