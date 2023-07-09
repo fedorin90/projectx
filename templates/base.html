@@ -93,7 +93,14 @@
           <div class="col-12 col-sm-12 col-lg-12 site-navigation text-center">
             <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu">
               <li><a href="{% url 'core:home' %}">Home</a></li>
-              <li><a href="{% url 'core:promotions' %}">Promotions</a></li>
+              <li class="has-children">
+                <a href="{% url 'core:promotions' %}">Promotions</a>
+                <ul class="dropdown">
+                  {% for cat in promotion_categories %}
+                  <li><a href="{% url 'core:promotion_category' cat.slug %}">{{cat.name}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
               <li class="has-children">
                 <a href="#">Shop</a>
                 <ul class="dropdown">

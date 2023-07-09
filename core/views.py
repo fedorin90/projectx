@@ -37,23 +37,16 @@ class PromotionView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Promotion & discounts'
-        context['promotion_categories'] = PromotionCategory.objects.all()
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(is_published=True).order_by('name')
+        sort_by = self.request.GET.get('order_by', 'name')
+        try:
+            return Promotion.objects.filter(is_published=True).order_by(sort_by)
+        except Exception as e:
+            print(e)
+            return Promotion.objects.filter(is_published=True).order_by('name')
 
-
-# def promotion(request):
-#     prom = Promotion.objects.all()
-#     cat = PromotionCategory.objects.all()
-#     context = {
-#         'title': 'Promotion & discounts',
-#         'promotion': prom,
-#         'promotion_categories': cat
-#     }
-#     return render(request, 'core/promotions.html', context=context)
-#
 
 class PromotionCategoryView(ListView):
     model = Promotion
@@ -70,7 +63,7 @@ class PromotionCategoryView(ListView):
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True).order_by('name')
+        return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True).order_by('update')
 
 
 # def promotion_category(request, slug):

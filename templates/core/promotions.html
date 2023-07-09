@@ -11,7 +11,9 @@
       <div class="container">
 
         <div class="filters" data-aos="fade-up" data-aos-delay="100">
+
           <ul>
+              Filter:
               {% if cat_selected %}
               <li><a href="{% url 'core:promotions' %}">All</a></li>
               {% else %}
@@ -28,6 +30,27 @@
         </div>
 	  </div>
 	</section>
+
+ <div class="container pb-5 mb-5 border-bottom">
+    <div class="row">
+      <div class="col-lg-2">
+        <form name="order_by" method="get">
+          <div class="form-group">
+            <label class="text-black">Sort by:</label>
+            <select name="order_by" id="order_by" class="custom-select">
+              <option value="name">Name</option>
+              <option value="create">Create</option>
+              <option value="update">Update</option>
+            </select>
+              <button type="submit" class="btn btn-primary-hover-outline">Submit</button>
+          </div>
+        </form>
+    </div>
+    </div>
+ </div>
+
+
+
 <div class="section-latest">
       <div class="container">
         <div class="row gutter-v1 align-items-stretch mb-5">
@@ -59,6 +82,5 @@
             </div>
           </div>
         </div>
-
 
 {% endblock content %}

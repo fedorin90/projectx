@@ -11,3 +11,7 @@ class ContactForm(forms.Form):
     message = forms.CharField(label='Message', max_length=2000, widget=forms.Textarea(attrs={
         'cols': '30', 'rows': '5', 'class': "form-control"}))
     # captcha = CaptchaField()
+
+
+class OrderByForm(forms.Form):
+    order_by = forms.ChoiceField(label="Sort by", choices=('name', 'create', 'update'))
