@@ -1,9 +1,17 @@
+import django_filters
 from django.db import models
 from django.urls import reverse
-import django_filters
 
 
-class PromotionCategory(models.Model):
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class PromotionCategory(TimeStampedModel):
     name = models.CharField(max_length=200, db_index=True, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
 
@@ -14,14 +22,12 @@ class PromotionCategory(models.Model):
         return self.name
 
 
-class Promotion(models.Model):
+class Promotion(TimeStampedModel):
     category = models.ForeignKey('PromotionCategory', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField(blank=True)
     image = models.FileField(upload_to="photos/%Y/%m/%d/", blank=True)
-    create = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
 
     def get_absolute_url(self):
@@ -36,7 +42,7 @@ class PromotionFilter(django_filters.FilterSet):
 
     class Meta:
         model = Promotion
-        fields = ['name', 'create', 'update']
+        fields = ['name', ]
 
 
 

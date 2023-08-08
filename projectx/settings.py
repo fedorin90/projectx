@@ -85,7 +85,7 @@ DATABASES = {
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 
@@ -198,7 +198,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 9
+SITE_ID = 10
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

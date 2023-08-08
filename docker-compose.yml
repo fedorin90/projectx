@@ -1,0 +1,18 @@
+version: '3.8'
+
+volumes:
+  db:
+    driver: local
+
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=projectx
+      - POSTGRES_USER=projectx_admin
+      - POSTGRES_PASSWORD=projectx
+    ports:
+      - '5433:5432'
+    volumes:
+      - db:/var/lib/postgresql/data

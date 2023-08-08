@@ -22,7 +22,7 @@ class HomeView(ListView):
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(is_published=True).order_by('update')[0:6]
+        return Promotion.objects.filter(is_published=True).order_by('updated_at')[0:6]
 
 
 # def home(request):
@@ -63,7 +63,7 @@ class PromotionCategoryView(ListView):
         return context
 
     def get_queryset(self):
-        return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True).order_by('update')
+        return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True).order_by('updated_at')
 
 
 # def promotion_category(request, slug):
