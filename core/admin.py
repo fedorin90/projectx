@@ -1,16 +1,15 @@
 from django.contrib import admin
-from .models import PromotionCategory, Promotion
+from .models import PromotionCategory, Promotion, NewsletterSub
 
 
+@admin.register(PromotionCategory)
 class PromotionCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
     list_display_links = ['name', 'slug']
 
 
-admin.site.register(PromotionCategory, PromotionCategoryAdmin)
-
-
+@admin.register(Promotion)
 class PromotionAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'image', 'is_published']
     list_display_links = ['name', 'slug']
@@ -18,4 +17,6 @@ class PromotionAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-admin.site.register(Promotion, PromotionAdmin)
+@admin.register(NewsletterSub)
+class NewsletterAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email']

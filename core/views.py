@@ -1,20 +1,24 @@
 from django.contrib import messages
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
 from django.core.mail import send_mail, BadHeaderError
+from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
-from .forms import ContactForm
-from .models import Promotion, PromotionCategory
+from .forms import ContactForm, NewsletterSubForm
+from .models import Promotion, PromotionCategory, NewsletterSub
+from .tasks import contact_info_tusk
 
 
-class HomeView(ListView):
-    model = Promotion
+class HomeView(ListView, FormView):
+    model = [Promotion, NewsletterSub]
     template_name = 'core/home.html'
     context_object_name = 'promotion'
+    form_class = NewsletterSubForm
+    success_url = reverse_lazy('core:home')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,9 +28,32 @@ class HomeView(ListView):
     def get_queryset(self):
         return Promotion.objects.filter(is_published=True).order_by('updated_at')[0:6]
 
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # send message from email
+        subject = "NewsLetter"
+        body = {
+            'name': form.cleaned_data['name'],
+            'email': form.cleaned_data['email']
+        }
+        message = "Hello. You subscribed to the newsletter we will send you a lot of spam here"
 
-# def home(request):
-#     return render(request, 'core/home.html', {'title': 'Home page'})
+        try:
+            NewsletterSub.objects.create(name=body['name'], email=body['email'])
+            send_mail(subject, message, 'fedorin.mir@gamil.com', [form.cleaned_data['email']])
+            messages.add_message(self.request, messages.SUCCESS,
+                                 "Message sent successfully!")
+        except BadHeaderError:
+
+            messages.add_message(self.request, messages.ERROR,
+                                 "Error sending message")
+            return HttpResponseRedirect(self.get_success_url())
+        except IntegrityError:
+            messages.add_message(self.request, messages.INFO,
+                                 "You already subscribe")
+            return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
+
 
 class PromotionView(ListView):
     model = Promotion
@@ -66,18 +93,6 @@ class PromotionCategoryView(ListView):
         return Promotion.objects.filter(category__slug=self.kwargs['slug'], is_published=True).order_by('updated_at')
 
 
-# def promotion_category(request, slug):
-#     prom = Promotion.objects.filter(category__slug__contains=slug)
-#     cat = PromotionCategory.objects.all()
-#     context = {
-#         'title': 'Promotion & discounts',
-#         'promotion': prom,
-#         'promotion_categories': cat,
-#         'cat_selected': slug
-#     }
-#     return render(request, 'core/promotions.html', context=context)
-
-
 class PromotionDetailView(DetailView):
     model = Promotion
     template_name = 'core/detail.html'
@@ -103,28 +118,15 @@ class ContactView(FormView):
         return context
 
     def form_valid(self, form):
-        messages.add_message(self.request, messages.SUCCESS,
-                             "Message sent successfully!")
-        return HttpResponseRedirect(self.get_success_url())
-
-    def form_valid_(self, form):
         # This method is called when valid form data has been POSTed.
         # send message from email
-        subject = "Website contact"
-        body = {
-            'first_name': form.cleaned_data['first_name'],
-            'last_name': form.cleaned_data['last_name'],
-            'email': form.cleaned_data['email'],
-            'message': form.cleaned_data['message'],
-        }
-        message = "\n".join(body.values())
-
-        try:
-            send_mail(subject, message, 'myr.devel@gmail.com', ['myr.devel@gmail.com'])
-            # messages.add_message(self.request, messages.SUCCESS,
-            #                      "Message sent successfully!")
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
+        contact_info_tusk.delay(
+            form.cleaned_data['first_name'],
+            form.cleaned_data['last_name'],
+            form.cleaned_data['email'],
+            form.cleaned_data['message'])
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Message sent successfully!")
         return super().form_valid(form)
 
 

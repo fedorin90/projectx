@@ -36,11 +36,13 @@
       </div>
     </div>
       <!-- products -->
+
     <div class="container mb-5">
           <div class="col-12">
             <h2 class="section-title">Products</h2>
           </div>
     </div>
+
       <!-- products -->
       <!-- services -->
     <div class="container mb-5">
@@ -49,6 +51,24 @@
           </div>
     </div>
       <!-- services -->
+          <div class="col-md-3">
+            <div class="floating-block sticky-top text-center">
+              <h2 class="mb-3 text-black">Subscribe to Newsletter</h2>
+              <form action="{% url 'core:home' %}" method="post">
+                  {% csrf_token %}
+				  <span style="color: red" class="form-error"> {{ form.non_field_errors}}</span>
+                    <div class="form-group">
+                      <p><label class="text-black" for="{{ form.name.id_for_label }}">{{ form.name.label }}:</label>{{ form.name }}</p>
+						<span style="color: red" class="form-error"> {{ form.name.errors }}</span>
+                    </div>
+                <div class="form-group">
+                  <p><label class="text-black" for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>{{ form.email }}</p>
+					<span style="color: red" class="form-error"> {{ form.email.errors }}</span>
+                </div>
+                <input type="submit" value="Subscribe" class="btn btn-primary btn-block">
+              </form>
+            </div>
+          </div>
 {% endblock content %}
 
 

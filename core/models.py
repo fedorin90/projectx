@@ -45,9 +45,12 @@ class PromotionFilter(django_filters.FilterSet):
         fields = ['name', ]
 
 
+class NewsletterSub(TimeStampedModel):
+    name = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200, unique=True)
 
-
-
+    def __str__(self):
+        return self.name
 
 
 
